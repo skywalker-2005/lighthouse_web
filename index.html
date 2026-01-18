@@ -1,58 +1,50 @@
-<!doctype html>
+<!DOCTYPE html>
 <html>
-  <head>
-    <meta charset="utf-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1" />
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
     <title>Lighthouse AR</title>
-    <script src="https://aframe.io/releases/1.4.0/aframe.min.js"></script>
-    <script src="https://cdn.jsdelivr.net/gh/donmccurdy/aframe-extras@v7.0.0/dist/aframe-extras.min.js"></script>
-  </head>
-  <body>
-    <a-scene
-      webxr="requiredFeatures: hit-test,local-floor;"
-      ar-hit-test="target:#lighthouse;"
-    >
-      <!-- Ваша 3D модель маяка -->
-      <a-entity
-        id="lighthouse"
-        gltf-model="url(./mayak_copy.glb)"
-        scale="0.2 0.2 0.2"
-        visible="false"
-      >
-      </a-entity>
-
-      <!-- Камера -->
-      <a-camera></a-camera>
-    </a-scene>
-
-    <!-- Инструкция для пользователя -->
-    <div
-      id="instructions"
-      style="
-        position: absolute;
-        top: 20px;
-        left: 50%;
-        transform: translateX(-50%);
-        background: rgba(0, 0, 0, 0.7);
-        color: white;
-        padding: 15px 25px;
-        border-radius: 10px;
-        font-family: Arial;
-        text-align: center;
-        z-index: 1000;
-      "
-    >
-      Наведите камеру на пол и тапните для размещения маяка
-    </div>
-
-    <script>
-      // Скрыть инструкцию после размещения объекта
-      document
-        .querySelector("a-scene")
-        .addEventListener("ar-hit-test-select", function () {
-          document.getElementById("lighthouse").setAttribute("visible", "true");
-          document.getElementById("instructions").style.display = "none";
-        });
-    </script>
-  </body>
+    <script type="module" src="https://ajax.googleapis.com/ajax/libs/model-viewer/3.4.0/model-viewer.min.js"></script>
+    <style>
+        body {
+            margin: 0;
+            font-family: Arial, sans-serif;
+        }
+        model-viewer {
+            width: 100vw;
+            height: 100vh;
+        }
+        #ar-button {
+            background: #007AFF;
+            color: white;
+            padding: 15px 30px;
+            border: none;
+            border-radius: 10px;
+            font-size: 18px;
+            position: absolute;
+            bottom: 30px;
+            left: 50%;
+            transform: translateX(-50%);
+        }
+    </style>
+</head>
+<body>
+    <model-viewer
+        src="lighthouse.glb"
+        ar
+        ar-modes="webxr scene-viewer quick-look"
+        camera-controls
+        auto-rotate
+        shadow-intensity="1"
+        alt="Lighthouse 3D model">
+        
+        <button slot="ar-button" id="ar-button">
+            👁️ Открыть в AR
+        </button>
+        
+        <div style="position: absolute; top: 20px; left: 20px; background: rgba(0,0,0,0.7); color: white; padding: 10px 20px; border-radius: 8px;">
+            Нажмите кнопку внизу для просмотра в AR
+        </div>
+    </model-viewer>
+</body>
 </html>
